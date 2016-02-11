@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:rxdroid="http://schemas.android.com/apk/res-auto"
+  android:title="@string/_title_preferences"
+  android:orderingFromXml="true"  
+>
+	
+	<!-- Times -->
+
+	<Preference
+		android:title="@string/_title_prefscreen_times"
+		android:icon="?attr/iconTime"
+	>
+		<intent 
+			android:action="android.intent.action.VIEW"
+			android:targetPackage="@string/app_package"
+			android:targetClass="at.jclehner.rxdroid.DoseTimePreferenceActivity2"
+		>
+			<!-- <extra android:name="at.jclehner.rxroid.extras.IS_FIRST_LAUNCH" android:value="true" />  -->
+		</intent>		
+		
+	</Preference>
+	
+	<!-- Appearance -->
+
+	
+	<Preference
+		android:title="@string/_title_prefscreen_display"
+		android:icon="?attr/iconPicture">
+		<intent
+			android:action="android.intent.action.VIEW"
+			android:targetPackage="@string/app_package"
+			android:targetClass="at.jclehner.rxdroid.SettingsActivity">
+
+			<extra android:name="rxdroid:preference_screen" android:value="xml/settings_appearance" />
+		</intent>
+	</Preference>
+	
+	<!-- Notifications -->
+
+	<Preference
+			android:title="@string/_title_prefscreen_notifications"
+			android:icon="?attr/iconWarning">
+		<intent
+				android:action="android.intent.action.VIEW"
+				android:targetPackage="@string/app_package"
+				android:targetClass="at.jclehner.rxdroid.SettingsActivity">
+
+			<extra android:name="rxdroid:preference_screen" android:value="xml/settings_notifications" />
+		</intent>
+	</Preference>
+
+	<!-- Database -->
+
+	<Preference
+			android:title="@string/_title_database"
+			android:icon="?attr/iconStorage">
+		<intent
+				android:action="android.intent.action.VIEW"
+				android:targetPackage="@string/app_package"
+				android:targetClass="at.jclehner.rxdroid.SettingsActivity">
+
+			<extra android:name="rxdroid:preference_screen" android:value="xml/settings_database" />
+		</intent>
+	</Preference>
+
+	<!-- Development -->
+
+<!--	<Preference
+			android:key="prefscreen_development"
+			android:title="Development">
+		<intent
+				android:action="android.intent.action.VIEW"
+				android:targetPackage="@string/app_package"
+				android:targetClass="at.jclehner.rxdroid.SettingsActivity">
+
+			<extra android:name="rxdroid:preference_screen" android:value="xml/settings_development" />
+		</intent>
+	</Preference>
+	
+	<PreferenceCategory 
+		android:title="@string/_title_about"		
+	>
+	
+		<Preference android:key="@string/key_version"
+			android:title="@string/_title_version"
+			android:icon="@null"
+		/>
+		
+		<Preference android:key="@string/key_licenses"
+			android:title="@string/_title_licenses"
+			android:icon="@null"
+		/>
+
+		<Preference android:key="website"
+			android:title="@string/_title_website"
+			android:summary="https://github.com/jclehner/rxdroid">
+
+			<intent
+					android:action="android.intent.action.VIEW"
+					android:data="https://github.com/jclehner/rxdroid"/>
+		</Preference>
+		
+		<Preference android:key="@string/key_donate"
+		    android:title="@string/_title_donate"
+		/>
+	
+	</PreferenceCategory>
+	-->
+</PreferenceScreen>

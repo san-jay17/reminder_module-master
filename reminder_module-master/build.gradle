@@ -1,0 +1,107 @@
+apply plugin: 'com.android.application'
+//apply plugin: 'hugo'
+
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		classpath 'com.android.tools.build:gradle:1.5.0'
+		//classpath 'com.jakewharton.hugo:hugo-plugin:1.1.0'
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven {
+		url './.m2repo'
+	}
+}
+
+dependencies {
+		compile 'com.j256.ormlite:ormlite-core:4.48'
+		compile 'com.j256.ormlite:ormlite-android:4.48'
+		compile 'com.android.support:support-v4:23.0.1'
+		compile 'com.android.support:support-v13:23.0.1'
+		compile 'com.android.support:appcompat-v7:23.0.1'
+		//compile 'com.android.support:cardview-v7:21.0.0'
+		compile 'com.nineoldandroids:library:2.4.0'
+		compile 'net.lingala.zip4j:zip4j:1.3.2'
+		//compile 'ch.acra:acra:5.0.0-SNAPSHOT'
+        compile 'joda-time:joda-time:2.5'
+
+		compile 'at.jclehner.rxdroid.localmaven:ShowcaseView:9999'
+}
+
+
+android {
+	buildToolsVersion '23.0.1'
+	compileSdkVersion 23
+
+	defaultConfig {
+		minSdkVersion 14
+		targetSdkVersion 23
+
+        applicationId 'at.jclehner.rxdroid';
+
+		versionCode 93100
+		versionName '0.9.31'
+	}
+
+	lintOptions {
+		warning 'MissingTranslation'
+	}
+
+	signingConfigs {
+		release {
+			def keystore = System.getenv("RXDROID_KEYSTORE")
+			if (keystore) {
+				storeFile file(keystore)
+				keyAlias System.getenv("RXDROID_KEY_ALIAS")
+				storePassword "****"
+				keyPassword "****"
+			}
+		}
+	}
+
+	buildTypes {
+		release {
+			minifyEnabled true
+			proguardFile 'proguard-project.txt'
+			signingConfig signingConfigs.release
+		}
+		debug {
+			applicationIdSuffix '.debug'
+		}
+	}
+}
+
+
+task askForKeystorePassword << {
+	if (!android.signingConfigs.release.storeFile) {
+		return
+	}
+
+	def prompt = 
+			"\n==========================================================" +
+			"\nKeystore : ${android.signingConfigs.release.storeFile}"     +
+			"\nKey alias: ${android.signingConfigs.release.keyAlias}"      +
+			"\n==========================================================" +
+			"\nPassword: "
+
+	def console = System.console()
+	
+	if (console) {
+		def pw = new String(console.readPassword(prompt))
+
+		android.signingConfigs.release.storePassword = pw
+		android.signingConfigs.release.keyPassword = pw
+	}
+}
+
+tasks.whenTaskAdded { theTask ->
+	if (theTask.name.equals("packageRelease")) {
+		theTask.dependsOn "askForKeystorePassword"
+	}
+}
